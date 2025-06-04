@@ -1,4 +1,20 @@
-Flask==2.3.0
-Flask-SQLAlchemy==3.0.0
-Werkzeug==2.3.0
-datetime==4.3.0
+# Dependências principais
+Flask==3.0.2
+Flask-SQLAlchemy==3.1.1
+Flask-Marshmallow==0.15.0
+marshmallow-SQLAlchemy==0.29.0
+Flask-JWT-Extended==4.5.3
+python-dotenv==1.0.1
+
+# Dependências de banco de dados e serialização
+SQLAlchemy==2.0.25
+marshmallow==3.20.2
+
+# Dependências de segurança
+Werkzeug==3.0.1 # Para hash de senhas
+PyJWT==2.8.0 # Para tokens JWT
+
+# Dependências para testes
+pytest==8.0.2 # Para testes unitários
+pytest-flask==1.2.0 # Para testes com Flask
+requests==2.31.0 # Para testes de API
