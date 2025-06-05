@@ -1,0 +1,141 @@
+openapi: 3.0.0
+info:
+  title: API de Gerenciamento de Dietas
+  description: Documentação das rotas da API
+  version: 1.0.0
+servers:
+  - url: "http://127.0.0.1:5000"
+paths:
+  /auth/register:
+    post:
+      summary: Criar um novo usuário
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  example: "usuario_exemplo"
+                password:
+                  type: string
+                  example: "123456"
+      responses:
+        "201":
+          description: Usuário criado com sucesso
+  /auth/login:
+    post:
+      summary: Login do usuário
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  example: "usuario_exemplo"
+                password:
+                  type: string
+                  example: "123456"
+      responses:
+        "200":
+          description: Login realizado com sucesso
+        "401":
+          description: Credenciais inválidas
+  /meals:
+    post:
+      summary: Criar uma nova refeição
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "Sanduíche de frango"
+                description:
+                  type: string
+                  example: "80g de frango desfiado e salada a vontade com azeite"
+                date_time:
+                  type: string
+                  format: date-time
+                  example: "2025-06-04T20:20:37"
+                is_in_diet:
+                  type: boolean
+                  example: true
+      responses:
+        "201":
+          description: Refeição criada com sucesso
+  /meals/{meal_id}:
+    get:
+      summary: Buscar refeição por ID
+      parameters:
+        - name: meal_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Dados da refeição encontrados
+        "404":
+          description: Refeição não encontrada
+    put:
+      summary: Atualizar refeição por ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: meal_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "Sanduíche de frango"
+                description:
+                  type: string
+                  example: "80g de frango desfiado e salada a vontade com azeite"
+                date_time:
+                  type: string
+                  format: date-time
+                  example: "2025-06-04T20:20:37"
+                is_in_diet:
+                  type: boolean
+                  example: true
+      responses:
+        "200":
+          description: Refeição atualizada com sucesso
+        "404":
+          description: Refeição não encontrada
+    delete:
+      summary: Deletar refeição por ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: meal_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Refeição deletada com sucesso
+        "404":
+          description: Refeição não encontrada
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
